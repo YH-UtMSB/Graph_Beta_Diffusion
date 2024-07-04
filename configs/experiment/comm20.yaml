@@ -1,0 +1,36 @@
+# @package _global_
+general:
+    name : 'comm20'
+    gpus : 1
+    wandb: 'disabled'
+    resume: 'outputs/2024-01-16-TACC/09-00-29-comm20-precond-logit-5/checkpoints/comm20/epoch=324999.ckpt'
+    test_only: null
+    check_val_every_n_epochs: 1000
+    sample_every_val: 10
+    samples_to_generate: 20
+    samples_to_save: 20
+    chains_to_save: 1
+    log_every_steps: 50
+    number_chain_steps: 50        # Number of frames in each gif
+    final_model_samples_to_generate: 1024
+    final_model_samples_to_save: 1024
+    final_model_chains_to_save: 10
+
+train:
+    n_epochs: 500000           # 500 K without annealing, 50K ~ 100K with annealing
+    batch_size: 256            # originally 256
+    save_model: true
+    lr: 0.00002
+    annealing: false
+    steplr_init_value: 0.0002
+    steplr_min_multiplier: null # can set to 0.1
+    steplr_step_size: 10000     # 5000
+    steplr_gamma: 0.5           # 0.9
+    ckpt_callback_steps: 25000  # 25K without annealing, 5K with annealing
+
+model:
+    input_space: 'logit'
+    n_layers: 5                 # try 5, 6, 7, 8
+    lambda_train: [5, 0]
+    extra_features: 'all'
+    apply_precondition: true

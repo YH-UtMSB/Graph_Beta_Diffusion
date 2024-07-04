@@ -1,0 +1,46 @@
+# @package _global_
+general:
+    name : 'drum_sbm'
+    gpus : 1
+    wandb: 'disabled'
+    resume: null
+    test_only: null
+    check_val_every_n_epochs: 100
+    sample_every_val: 4
+    samples_to_generate: 40
+    samples_to_save: 9
+    chains_to_save: 1
+    log_every_steps: 50
+    number_chain_steps: 50        # Number of frames in each gif
+    final_model_samples_to_generate: 40
+    final_model_samples_to_save: 30
+    final_model_chains_to_save: 20
+
+train:
+    n_epochs: 25000           # 500 K without annealing, 50K ~ 100K with annealing
+    batch_size: 8            # originally 256
+    save_model: true
+    lr: 0.0002
+    annealing: true
+    steplr_init_value: 0.0002
+    steplr_min_multiplier: 0.1 # can set to 0.1
+    steplr_step_size: 5000     # 5000
+    steplr_gamma: 0.5           # 0.9
+    ckpt_callback_steps: 2500  # 25K without annealing, 5K with annealing
+    lambda_train: [5., 1.]      # combination of loss(A) and loss(X)
+
+model:
+    input_space: 'logit'
+    n_layers: 6                 # try 5, 6, 7, 8
+    extra_features: 'all'
+    
+    # precondition
+    apply_precondition: true
+
+    # scale and shift parameters
+    Scale: 0.9
+    Shift: 0.09
+    
+    # eta for E and X
+    eta_E: 60
+    eta_X: 1000
