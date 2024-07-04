@@ -1,0 +1,17 @@
+defaults:
+    - _self_
+    - general : general_default
+    - model : beta
+    - train : train_default
+    - dataset : comm20
+
+hydra:
+  job:
+    chdir: True
+  run:
+    # dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}-${general.name}-${model.input_space}-${model.n_layers}
+    dir: ./outputs/${now:%Y-%m-%d}/${now:%H-%M-%S}-${general.name}
+
+
+
+
