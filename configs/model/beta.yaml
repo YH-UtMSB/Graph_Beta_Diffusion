@@ -1,0 +1,40 @@
+#######################################################
+################ model hyperparameters ################
+type: 'beta'
+model: 'graph_tf'
+
+# Do not set hidden_mlp_E, dim_ffE too high, computing large tensors on the edges is costly
+# At the moment (03/08), y contains quite little information
+hidden_mlp_dims: {'X': 256, 'E': 128, 'y': 128}
+
+# The dimensions should satisfy dx % n_head == 0
+hidden_dims : {'dx': 256, 'de': 64, 'dy': 64, 'n_head': 8, 'dim_ffX': 256, 'dim_ffE': 128, 'dim_ffy': 128}
+
+input_space: 'original'    # ‘logit’ or 'original'
+
+
+#######################################################
+################## diffusion schedule #################
+
+diffusion_steps: 500
+diffusion_noise_schedule: 'sigmoid'  # 'sigmoid', 'linear'
+
+# linear schedule parameters
+beta_max: 20
+beta_min: 0.1
+
+# sigmoid schedule parameters
+sigmoid_start: 10    # 9
+sigmoid_end: -13     # -9
+sigmoid_power: 1.  # 0.5
+
+
+#######################################################
+################# data hyperparameters ################
+
+Scale: 0.9    # originally 0.39
+Shift: 0.09     # originally 0.6
+
+# concentration parameters
+eta_E: 60
+eta_X: 60
